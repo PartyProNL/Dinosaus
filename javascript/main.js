@@ -9,17 +9,11 @@ var config = {
   }
 };
 
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    scene: [loaderSceneConfig, menuSceneConfig, gameSceneConfig]
+};
+
 var game = new Phaser.Game(config);
-
-function preload() {
-  const assetLoader = new AssetLoader("../assets", this);
-  assetLoader.loadAssets();
-}
-
-function create() {
-
-}
-
-function update() {
-
-}
