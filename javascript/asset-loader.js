@@ -8,7 +8,9 @@ var loaderSceneConfig = {
 function preload() {
   console.log("Loading assets...");
 
-  this.load.image("test", "assets/Character-Temp/pixil-frame-1.png");
+  // Laden van alle foto's
+  this.load.image("ground", "assets/environment/ground.png");
+  this.load.image("dino", "assets/character/pixil-frame-1.png");
 }
 
 function create() {
