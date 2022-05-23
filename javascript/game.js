@@ -38,7 +38,7 @@ function create() {
   player.setScale(2.3);
   player.setBounce(0);
   this.physics.add.collider(player, platforms);
-  player.body.setGravityY(500)
+  player.body.setGravityY(750)
 
   // De group aanmaken voor de cactussen
   cactusses = this.physics.add.group();
@@ -61,7 +61,7 @@ function update(time, delta) {
 
   // Alle cactussen laten bewegen
   cactusses.children.iterate(function(child) {
-    child.x -= (cactusSpeed/delta) * 50;
+    child.x -= (cactusSpeed/delta) * 100;
   })
 
   // Updaten van een timer die elke seconde geactiveerd wordt
@@ -74,7 +74,7 @@ function update(time, delta) {
 
   // Spring functionaliteit
   if (WKey.isDown && player.body.touching.down){
-    player.setVelocityY(-500);
+    player.setVelocityY(-700);
   }
 }
 
@@ -98,5 +98,5 @@ function spawnCactus() {
   console.log("Cactus wordt gespawned");
 
   var cactus = cactusses.create(800, cactusY, 'cactus');
-  cactus.setScale(2.3);
+  cactus.setScale(2.7);
 }
