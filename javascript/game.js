@@ -22,6 +22,18 @@ var scoreLabel = null;
 var cactusses = null;
 
 function create() {
+  // Resetten van variabelen (wordt niet automatisch gedaan bij starten scene)
+  WKey = null;
+  SKey = null;
+  currentTime = 0;
+  secondsTimer = 0;
+  secondsPassed = 0;
+  scoreLabel = null;
+  cactusses = null;
+  cactusSpeed = 1.0;
+  cactusY = 390;
+  leftUntilSpawn = 0;
+
   // De achtergrond toevoegen
   var image = this.add.image(400, 300, 'background');
   image.setScale(2);
@@ -70,7 +82,12 @@ function update(time, delta) {
   currentTime += delta;
 
   // Score updaten
-  scoreLabel.setText("SCORE "+parseInt(currentTime/100));
+  var score = parseInt(currentTime/100);
+  scoreLabel.setText("SCORE "+score);
+
+  if(score >= 1000) {
+    this.scene.start('win');
+  }
 
   // Speed langzaam verhogen
   cactusSpeed += delta/100000;
@@ -114,6 +131,9 @@ function hitCactus() {
   this.physics.pause();
   player.setTint(0xff0000);
   gameOver = true;
+
+  var score = parseInt(currentTime/100);
+  this.scene.start('lose', {score:score});
 }
 
 var cactusSpeed = 1.0;
