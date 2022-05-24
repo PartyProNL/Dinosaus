@@ -34,7 +34,21 @@ function create() {
   platforms.create(400, 600-96, 'ground').setScale(2).refreshBody();
 
   // De speler maken
-  player = this.physics.add.sprite(100, 600-200, 'dino');
+  this.anims.create({
+            key: 'dino-run',
+            frames: [
+                { key: 'trex1' },
+                { key: 'trex2' },
+                { key: 'trex3' },
+                { key: 'trex4', duration: 50 }
+            ],
+            frameRate: 12,
+            repeat: -1
+        });
+
+  player = this.physics.add.sprite(100, 600-200, 'trex1')
+            .play('dino-run');
+  //player = this.physics.add.sprite(100, 600-200, 'dino');
 
   player.setScale(2.3);
   player.setBounce(0);
@@ -92,7 +106,7 @@ function updateSecond() {
 
   if(leftUntilSpawn <= 0) {
     spawnCactus();
-    leftUntilSpawn = Math.floor(Math.random() * 3) + 1;
+    leftUntilSpawn = Math.random() * 3 + 1;
   }
 }
 
