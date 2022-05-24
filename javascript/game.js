@@ -14,6 +14,7 @@ var gameSceneConfig = {
 };
 
 var WKey = null;
+var SKey = null;
 var currentTime = 0;
 var secondsTimer = 0;
 var secondsPassed = 0;
@@ -38,7 +39,7 @@ function create() {
   player.setScale(2.3);
   player.setBounce(0);
   this.physics.add.collider(player, platforms);
-  player.body.setGravityY(750)
+  player.body.setGravityY(1000)
 
   // De group aanmaken voor de cactussen
   cactusses = this.physics.add.group();
@@ -46,7 +47,8 @@ function create() {
   this.physics.add.collider(player, cactusses, hitCactus, null, this);
 
   // De W toets registreren om later te gebruiken voor het springen
-  WKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);;
+  WKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+  SKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 }
 
 function update(time, delta) {
@@ -57,7 +59,7 @@ function update(time, delta) {
   scoreLabel.setText("SCORE "+parseInt(currentTime/100));
 
   // Speed langzaam verhogen
-  cactusSpeed += delta/10000;
+  cactusSpeed += delta/100000;
 
   // Alle cactussen laten bewegen
   cactusses.children.iterate(function(child) {
@@ -74,15 +76,25 @@ function update(time, delta) {
 
   // Spring functionaliteit
   if (WKey.isDown && player.body.touching.down){
-    player.setVelocityY(-700);
+    player.setVelocityY(-800);
+  }
+
+  // Duik functionaliteit
+  if (SKey.isDown && !player.body.touching.down){
+    let velocity = player.velocity;
+    console.log(velocity.y);
+    player.setVelocityY(player.getVelocityY() + 2);
+    console.log(velocity.y);
   }
 }
 
+var leftUntilSpawn = 0;
 function updateSecond() {
-  var random = Math.floor(Math.random() * 4);
+  leftUntilSpawn--;
 
-  if(random == 3) {
+  if(leftUntilSpawn <= 0) {
     spawnCactus();
+    leftUntilSpawn = Math.floor(Math.random() * 3) + 1;
   }
 }
 
