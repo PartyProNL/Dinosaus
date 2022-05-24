@@ -20,6 +20,8 @@ var secondsTimer = 0;
 var secondsPassed = 0;
 var scoreLabel = null;
 var cactusses = null;
+var items = null
+var game = null;
 
 function create() {
   // Resetten van variabelen (wordt niet automatisch gedaan bij starten scene)
@@ -33,6 +35,10 @@ function create() {
   cactusSpeed = 1.0;
   cactusY = 390;
   leftUntilSpawn = 0;
+  //leftUntilItemSpawn = Math.random() * 5 + 15
+  leftUntilItemSpawn = 1;
+  ninjaHitsLeft = 0;
+  game = this;
 
   // De achtergrond toevoegen
   var image = this.add.image(400, 300, 'background');
@@ -58,6 +64,39 @@ function create() {
             repeat: -1
         });
 
+  this.anims.create({
+    key: 'ninja-run',
+    frames: [
+      { key: 'ninja1' },
+      { key: 'ninja2' },
+      { key: 'ninja3' },
+      { key: 'ninja4' },
+      { key: 'ninja5' },
+      { key: 'ninja6' },
+      { key: 'ninja7' },
+      { key: 'ninja8', duration: 50 }
+    ],
+    frameRate: 12,
+    repeat: -1
+  });
+
+  this.anims.create({
+    key: 'laser-run',
+    frames: [
+      { key: 'laser1' },
+      { key: 'laser2' },
+      { key: 'laser3' },
+      { key: 'laser4' },
+      { key: 'laser5' },
+      { key: 'laser6' },
+      { key: 'laser7' },
+      { key: 'laser8' },
+      { key: 'laser9', duration: 50 }
+    ],
+    frameRate: 12,
+    repeat: -1
+  });
+
   player = this.physics.add.sprite(100, 600-200, 'trex1')
             .play('dino-run');
   //player = this.physics.add.sprite(100, 600-200, 'dino');
@@ -70,7 +109,14 @@ function create() {
   // De group aanmaken voor de cactussen
   cactusses = this.physics.add.group();
   this.physics.add.collider(cactusses, platforms);
-  this.physics.add.collider(player, cactusses, hitCactus, null, this);
+  this.physics.add.collider(player, cactusses, function(obj1, obj2){hitCactus(obj1, obj2);}, null, this);
+
+  // De group aanmaken voor de items
+  items = this.physics.add.group({
+        immovable: true,
+        allowGravity: false
+    });
+  this.physics.add.collider(player, items, function(obj1, obj2){hitItem(obj1, obj2);}, null, this)
 
   // De W toets registreren om later te gebruiken voor het springen
   WKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -97,6 +143,11 @@ function update(time, delta) {
     child.x -= (cactusSpeed/delta) * 100;
   })
 
+  // Alle items laten bewegen
+  items.children.iterate(function(child) {
+    child.x -= (cactusSpeed/delta) * 100;
+  })
+
   // Updaten van een timer die elke seconde geactiveerd wordt
   secondsTimer += delta;
   while (secondsTimer >= 1000) {
@@ -118,6 +169,8 @@ function update(time, delta) {
 }
 
 var leftUntilSpawn = 0;
+var leftUntilItemSpawn = 0;
+var spawnedItemType = "";
 function updateSecond() {
   leftUntilSpawn--;
 
@@ -125,22 +178,66 @@ function updateSecond() {
     spawnCactus();
     leftUntilSpawn = Math.random() * 3 + 1;
   }
+
+  leftUntilItemSpawn--;
+  console.log(leftUntilItemSpawn);
+  if(leftUntilItemSpawn <= 0) {
+    spawnItem();
+    leftUntilItemSpawn = Math.random() * 5 + 15
+  }
+
+  if(laserTimeLeft > 0) {
+    laserTimeLeft--;
+    cactusses.clear(true, true);
+    if(laserTimeLeft <= 0) {
+      player.play('dino-run');
+    }
+  }
 }
 
-function hitCactus() {
-  this.physics.pause();
-  player.setTint(0xff0000);
-  gameOver = true;
+var itemY = 200;
+var itemTypes = ["ninja", "laser"]
+function spawnItem() {
+  var itemType = itemTypes[Math.floor(Math.random()*itemTypes.length)];
+  spawnedItemType = itemType;
+  var item = items.create(800, itemY, itemType);
+  item.setScale(2.7);
+}
 
-  var score = parseInt(currentTime/100);
-  this.scene.start('lose', {score:score});
+function hitItem(player, item) {
+  if(spawnedItemType == "ninja") {
+    item.destroy();
+    ninjaHitsLeft = 3;
+    player.play('ninja-run');
+  }
+
+  if(spawnedItemType == "laser") {
+    item.destroy();
+    cactusses.clear(true, true);
+    player.play('laser-run');
+  }
+}
+
+var laserTimeLeft = 0;
+var ninjaHitsLeft = 0;
+function hitCactus(player, cactus) {
+  if(ninjaHitsLeft > 0) {
+    ninjaHitsLeft--;
+    cactus.destroy();
+
+    if(ninjaHitsLeft <= 0) {
+      player.play('dino-run');
+    }
+  } else {
+    gameOver = true;
+    var score = parseInt(currentTime/100);
+    game.scene.start('lose', {score:score});
+  }
 }
 
 var cactusSpeed = 1.0;
 var cactusY = 390;
 function spawnCactus() {
-  console.log("Cactus wordt gespawned");
-
   var cactus = cactusses.create(800, cactusY, 'cactus');
   cactus.setScale(2.7);
 }
