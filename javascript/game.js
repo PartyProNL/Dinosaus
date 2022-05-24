@@ -81,10 +81,8 @@ function update(time, delta) {
 
   // Duik functionaliteit
   if (SKey.isDown && !player.body.touching.down){
-    let velocity = player.velocity;
-    console.log(velocity.y);
-    player.setVelocityY(player.getVelocityY() + 2);
-    console.log(velocity.y);
+    let velocity = player.body.velocity;
+    player.setVelocityY(velocity.y + 2.5*delta);
   }
 }
 
