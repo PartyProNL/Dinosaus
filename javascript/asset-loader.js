@@ -13,7 +13,7 @@ function preload() {
   this.load.image("background", "assets/environment/background.png");
   //this.load.image("dino", "assets/character/pixil-frame-1.png");
   this.load.image("cactus", "assets/encounters/cactus.png");
-  this.load.image("sombrero", "assests/encounters/sombrero.png");
+  this.load.image("sombrero", "assets/encounters/sombrero.png");
   this.load.image('ninja', 'assets/items/ninja.png')
   this.load.image('laser', 'assets/items/laser.png')
 

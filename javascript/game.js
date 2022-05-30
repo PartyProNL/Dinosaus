@@ -135,12 +135,12 @@ function update(time, delta) {
   var score = parseInt(currentTime/100);
   scoreLabel.setText("SCORE "+score);
 
-  if(score >= 1000) {
+  if(score >= 2500) {
     this.scene.start('win');
   }
 
   // Speed langzaam verhogen
-  cactusSpeed += delta/100000;
+  cactusSpeed += 0.00001 * delta;
 
   // Alle cactussen laten bewegen
   cactusses.children.iterate(function(child) {
@@ -184,7 +184,6 @@ function updateSecond() {
   }
 
   leftUntilItemSpawn--;
-  console.log(leftUntilItemSpawn);
   if(leftUntilItemSpawn <= 0) {
     spawnItem();
     leftUntilItemSpawn = Math.random() * 5 + 15
@@ -217,7 +216,7 @@ function hitItem(player, item) {
 
   if(spawnedItemType == "laser") {
     item.destroy();
-    laserTimeLeft = 10;
+    laserTimeLeft = 5;
     cactusses.clear(true, true);
     player.play('laser-run');
   }
@@ -243,6 +242,12 @@ function hitCactus(player, cactus) {
 var cactusSpeed = 1.0;
 var cactusY = 390;
 function spawnCactus() {
-  var cactus = cactusses.create(800, cactusY, 'cactus');
+  var randomNumber = Math.floor(Math.random() * 9);
+  var texture = 'cactus';
+  if(randomNumber == 5) {
+    texture = 'sombrero';
+  }
+
+  var cactus = cactusses.create(800, cactusY, texture);
   cactus.setScale(2.7);
 }
