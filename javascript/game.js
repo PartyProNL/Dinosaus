@@ -35,8 +35,7 @@ function create() {
   cactusSpeed = 1.0;
   cactusY = 390;
   leftUntilSpawn = 0;
-  //leftUntilItemSpawn = Math.random() * 5 + 15
-  leftUntilItemSpawn = 1;
+  leftUntilItemSpawn = Math.random() * 5 + 15
   ninjaHitsLeft = 0;
   game = this;
 
@@ -91,7 +90,12 @@ function create() {
       { key: 'laser6' },
       { key: 'laser7' },
       { key: 'laser8' },
-      { key: 'laser9', duration: 50 }
+      { key: 'laser9' },
+      { key: 'laser10' },
+      { key: 'laser11' },
+      { key: 'laser12' },
+      { key: 'laser13' },
+      { key: 'laser14', duration: 50 }
     ],
     frameRate: 12,
     repeat: -1
@@ -213,6 +217,7 @@ function hitItem(player, item) {
 
   if(spawnedItemType == "laser") {
     item.destroy();
+    laserTimeLeft = 10;
     cactusses.clear(true, true);
     player.play('laser-run');
   }

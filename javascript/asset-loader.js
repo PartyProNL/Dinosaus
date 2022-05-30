@@ -41,6 +41,11 @@ function preload() {
         this.load.image('laser7', 'laser7.png');
         this.load.image('laser8', 'laser8.png');
         this.load.image('laser9', 'laser9.png');
+        this.load.image('laser10', 'laser10.png');
+        this.load.image('laser11', 'laser11.png');
+        this.load.image('laser12', 'laser12.png');
+        this.load.image('laser13', 'laser13.png');
+        this.load.image('laser14', 'laser14.png');
 }
 
 function create() {
