@@ -76,7 +76,7 @@ this.anims.create({
                 { key: 'ground21' },
                 { key: 'ground22' },
             ],
-            framerate:9999999999,
+            framerate:12,
             repeat: -1
   });
 
