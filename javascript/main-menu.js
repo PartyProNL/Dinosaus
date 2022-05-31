@@ -18,10 +18,12 @@ function mainCreate() {
 
 function mainUpdate() {
   if (EKey.isDown && this.scene.key == "menu"){
+    EKey.isDown = false;
     this.scene.start('game');
   }
 
   if (IKey.isDown && this.scene.key == "menu"){
+    IKey.isDown = false;
     this.scene.start('info');
   }
 }

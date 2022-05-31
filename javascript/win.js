@@ -14,6 +14,7 @@ function create() {
 
 function update() {
   if (RKey.isDown){
+    RKey.isDown = false;
     this.scene.start('menu');
   }
 }
