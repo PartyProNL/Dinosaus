@@ -227,7 +227,11 @@ function updateSecond() {
     laserTimeLeft--;
     cactusses.clear(true, true);
     if(laserTimeLeft <= 0) {
-      player.play('dino-run');
+      if(ninjaHitsLeft <= 0) {
+        player.play('dino-run');
+      } else {
+        player.play('ninja-run');
+      }
     }
   }
 }
