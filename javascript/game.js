@@ -50,6 +50,40 @@ function create() {
   var platforms = this.physics.add.staticGroup();
   platforms.create(400, 600-96, 'ground').setScale(2).refreshBody();
 
+this.anims.create({
+            key: 'ground-move',
+            frames: [
+                { key: 'ground1' },
+                { key: 'ground2' },
+                { key: 'ground3' },
+                { key: 'ground4' },
+                { key: 'ground5' },
+                { key: 'ground6' },
+                { key: 'ground7' },
+                { key: 'ground8' },
+                { key: 'ground9' },
+                { key: 'ground10' },
+                { key: 'ground11' },
+                { key: 'ground12' },
+                { key: 'ground13' },
+                { key: 'ground14' },
+                { key: 'ground15' },
+                { key: 'ground16' },
+                { key: 'ground17' },
+                { key: 'ground18' },
+                { key: 'ground19' },
+                { key: 'ground20' },
+                { key: 'ground21' },
+                { key: 'ground22' },
+            ],
+            framerate:9999999999,
+            repeat: -1
+  });
+
+platforms.children.iterate(function(child){
+  child.play('ground-move');
+});
+
   // De speler maken
   this.anims.create({
             key: 'dino-run',
