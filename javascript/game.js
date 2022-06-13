@@ -169,7 +169,7 @@ function update(time, delta) {
   var score = parseInt(currentTime/100);
   scoreLabel.setText("SCORE "+score);
 
-  if(score >= 25) {
+  if(score >= 2500) {
     this.scene.start('win');
   }
 
