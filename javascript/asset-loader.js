@@ -11,6 +11,7 @@ function preload() {
   // Laden van alle foto's
   this.load.image("ground", "assets/environment/ground.png");
   this.load.image("background", "assets/environment/background.png");
+  this.load.image("winbackground", "assets/environment/winbackground.png")
   //this.load.image("dino", "assets/character/pixil-frame-1.png");
   this.load.image("cactus", "assets/encounters/cactus.png");
   this.load.image("sombrero", "assets/encounters/sombrero.png");

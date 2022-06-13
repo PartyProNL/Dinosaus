@@ -7,8 +7,8 @@ var winSceneConfig = {
 };
 
 function create() {
-  var naamLabel = this.add.text(80,80, 'Je hebt gewonnen',{font: '50px Arial', fill: '#ffffff'});
-  var menuLabel = this.add.text(80, 160, 'Druk op R om terug te gaan naar het menu', {font: '25px Arial', fill: '#00ff00'});
+  var image = this.add.image(400, 300, 'winbackground');
+  var menuLabel = this.add.text(160, 570, 'Druk op R om terug te gaan naar het menu', {font: '25px Arial', fill: '#ffffff'});
   RKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 }
 
